@@ -1,5 +1,9 @@
 # nestjs-kysely
 
+[![npm version](https://badge.fury.io/js/%40kzmat%2Fnestjs-kysely.svg)](https://badge.fury.io/js/%40kzmat%2Fnestjs-kysely.svg)
+[![test](https://github.com/kzmat/nestjs-kysely/actions/workflows/test.yml/badge.svg)](https://github.com/kzmat/nestjs-kysely/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/kzmat/nestjs-kysely/branch/master/graph/badge.svg?token=5PN87HH33L)](https://codecov.io/gh/kzmat/nestjs-kysely)
+
 `nestjs-kysely` implements a module that provides the client of Kysely, which is a type-safe query builder.
 
 ## install
@@ -11,7 +15,7 @@ yarn add nestjs-kysely
 ## Example
 
 ```
-yarn add  nestjs-kysely mysql2
+yarn add nestjs-kysely mysql2
 ```
 
 Register KyselyModule for your app.
