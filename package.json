@@ -1,5 +1,5 @@
 {
-  "name": "@kzmat/nestjs-kysely",
+  "name": "nestjs-kysely",
   "version": "0.0.1",
   "description": "Kysely module for NestJS",
   "keywords": [
