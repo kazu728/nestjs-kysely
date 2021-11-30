@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    volumes:
+      - kysely_db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: kysely_test
+      MYSQL_ROOT_PASSWORD: password
+
+volumes:
+  kysely_db:
