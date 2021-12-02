@@ -21,7 +21,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "yarn clean && tsc",
+    "build": "yarn clean && tsc -p tsconfig.lib.json",
     "clean": "rimraf ./dist",
     "fix:eslint": "eslint --fix --ext ts,tsx ./src",
     "fix:prettier": "prettier --write \"./**/*.{md,json}\"",
