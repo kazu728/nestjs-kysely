@@ -1,6 +1,6 @@
 # nestjs-kysely
 
-[![npm version](https://badge.fury.io/js/%40kzmat%2Fnestjs-kysely.svg)](https://badge.fury.io/js/%40kzmat%2Fnestjs-kysely.svg)
+[![npm version](https://badge.fury.io/js/nestjs-kysely.svg)](https://badge.fury.io/js/nestjs-kysely.svg)
 [![test](https://github.com/kzmat/nestjs-kysely/actions/workflows/test.yml/badge.svg)](https://github.com/kzmat/nestjs-kysely/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/kzmat/nestjs-kysely/branch/master/graph/badge.svg?token=5PN87HH33L)](https://codecov.io/gh/kzmat/nestjs-kysely)
 
