@@ -1,4 +1,4 @@
-import { ModuleMetadata, Type } from '@nestjs/common'
+import { Abstract, ModuleMetadata, Type } from '@nestjs/common'
 import {
   MysqlDialect,
   MysqlDialectConfig,
@@ -11,6 +11,13 @@ export type DbDiarect = MysqlDialect | PostgresDialect
 export type DbDiarectConfig = MysqlDialectConfig | PostgresDialectConfig
 
 export type KyselyOptions = DbEngine & DbDiarectConfig
+type InjectType = (
+  | string
+  | symbol
+  | Type<unknown>
+  | Abstract<unknown>
+  | (() => void)
+)[]
 
 export interface KyselyModuleOptionsFactory {
   createKyselyModuleOptions(): Promise<KyselyOptions> | KyselyOptions
@@ -18,8 +25,7 @@ export interface KyselyModuleOptionsFactory {
 
 export interface KyselyModuleAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  inject?: any[]
+  inject?: InjectType
   useClass?: Type<KyselyOptions>
   useExisting?: Type<KyselyModuleOptionsFactory>
   useFactory?: (...args: unknown[]) => Promise<KyselyOptions> | KyselyOptions
