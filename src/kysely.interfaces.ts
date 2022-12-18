@@ -28,5 +28,5 @@ export interface KyselyModuleAsyncOptions
   inject?: InjectType
   useClass?: Type<KyselyOptions>
   useExisting?: Type<KyselyModuleOptionsFactory>
-  useFactory?: (...args: unknown[]) => Promise<KyselyOptions> | KyselyOptions
+  useFactory?: (...args: any[]) => Promise<KyselyOptions> | KyselyOptions
 }
