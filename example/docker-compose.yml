@@ -7,6 +7,7 @@ services:
       - 3306:3306
     volumes:
       - kysely_db:/var/lib/mysql
+      - ./docker/seed:/docker-entrypoint-initdb.d
     environment:
       MYSQL_DATABASE: kysely_test
       MYSQL_ROOT_PASSWORD: password

@@ -1,11 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { Kysely, PostgresDialect } from 'kysely'
-import { KyselyModule } from '../kysely.module'
-import { commonOptions } from '../utility'
-import { InjectKysely } from './kysely.decorator'
+import { Test, TestingModule } from "@nestjs/testing";
+import { Kysely, PostgresDialect } from "kysely";
+import { KyselyModule } from "../kysely.module";
+import { commonOptions } from "../utility";
+import { InjectKysely } from "./kysely.decorator";
 
-describe('InjectKysely', () => {
-  let module: TestingModule
+describe("InjectKysely", () => {
+  let module: TestingModule;
 
   class TestService {
     constructor(@InjectKysely() readonly db: Kysely<unknown>) {}
@@ -21,13 +21,13 @@ describe('InjectKysely', () => {
         }),
       ],
       providers: [TestService],
-    }).compile()
-  })
+    }).compile();
+  });
 
-  test('should inject the kysely client', () => {
-    const testService = module.get(TestService)
+  test("should inject the kysely client", () => {
+    const testService = module.get(TestService);
 
-    expect(testService).toHaveProperty('db')
-    expect(testService.db).toBeInstanceOf(Kysely)
-  })
-})
+    expect(testService).toHaveProperty("db");
+    expect(testService.db).toBeInstanceOf(Kysely);
+  });
+});
