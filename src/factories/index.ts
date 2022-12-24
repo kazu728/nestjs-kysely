@@ -1,1 +1,1 @@
-export * from './kysely-client.factory'
+export * from "./kysely-client.factory";
