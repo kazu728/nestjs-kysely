@@ -23,6 +23,7 @@
   "scripts": {
     "build": "yarn clean && tsc -p tsconfig.lib.json",
     "clean": "rimraf ./dist",
+    "copy:to-exmaple": "yarn build && cp -R dist example/node_modules/nestjs-kysely/",
     "fix:eslint": "eslint --fix --ext ts,tsx ./src",
     "fix:prettier": "prettier --write \"./**/*.{md,json}\"",
     "link:package": "yarn && yarn build && cp -r dist ./node_modules && mv ./node_modules/dist ./node_modules/nestjs-kysely",
