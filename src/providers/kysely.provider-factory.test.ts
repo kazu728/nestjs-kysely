@@ -1,5 +1,6 @@
+import { KyselyConfig, PostgresDialect } from 'kysely'
 import { KYSELY_MODULE_OPTIONS_TOKEN } from '../constants'
-import { KyselyModuleAsyncOptions, KyselyOptions } from '../kysely.interfaces'
+import { KyselyModuleAsyncOptions } from '../kysely.interfaces'
 import { commonOptions } from '../utility'
 import {
   createAsyncOptionsProvider,
@@ -7,9 +8,8 @@ import {
 } from './kysely.provider-factory'
 
 describe('Kysely provider factory', () => {
-  const useFactory = (): KyselyOptions => ({
-    engine: 'mysql',
-    ...commonOptions,
+  const useFactory = (): KyselyConfig => ({
+    dialect: new PostgresDialect({ ...commonOptions }),
   })
 
   test('should get async provider', () => {
