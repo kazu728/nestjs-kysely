@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { Kysely } from 'kysely'
+import { Kysely, PostgresDialect } from 'kysely'
 import { KyselyModule } from '../kysely.module'
 import { commonOptions } from '../utility'
 import { InjectKysely } from './kysely.decorator'
@@ -13,7 +13,13 @@ describe('InjectKysely', () => {
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
-      imports: [KyselyModule.forRoot({ engine: 'mysql', ...commonOptions })],
+      imports: [
+        KyselyModule.forRoot({
+          dialect: new PostgresDialect({
+            ...commonOptions,
+          }),
+        }),
+      ],
       providers: [TestService],
     }).compile()
   })

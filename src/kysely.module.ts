@@ -1,13 +1,14 @@
 import { DynamicModule, Module } from '@nestjs/common'
+import { KyselyConfig } from 'kysely'
 import { KyselyCoreModule } from './kysely.core.module'
-import { KyselyModuleAsyncOptions, KyselyOptions } from './kysely.interfaces'
+import { KyselyModuleAsyncOptions } from './kysely.interfaces'
 
 @Module({})
 export class KyselyModule {
-  public static forRoot(options: KyselyOptions): DynamicModule {
+  public static forRoot(config: KyselyConfig): DynamicModule {
     return {
       module: KyselyModule,
-      imports: [KyselyCoreModule.forRoot(options)],
+      imports: [KyselyCoreModule.forRoot(config)],
     }
   }
 

@@ -1,32 +1,16 @@
 import { Abstract, ModuleMetadata, Type } from '@nestjs/common'
-import {
-  MysqlDialect,
-  MysqlDialectConfig,
-  PostgresDialect,
-  PostgresDialectConfig,
-} from 'kysely'
+import { KyselyConfig } from 'kysely'
 
-export type DbEngine = { engine: 'mysql' | 'postgresql' }
-export type DbDiarect = MysqlDialect | PostgresDialect
-export type DbDiarectConfig = MysqlDialectConfig | PostgresDialectConfig
-
-export type KyselyOptions = DbEngine & DbDiarectConfig
-type InjectType = (
-  | string
-  | symbol
-  | Type<unknown>
-  | Abstract<unknown>
-  | (() => void)
-)[]
+type InjectType = (string | symbol | Type<any> | Abstract<any> | (() => void))[]
 
 export interface KyselyModuleOptionsFactory {
-  createKyselyModuleOptions(): Promise<KyselyOptions> | KyselyOptions
+  createKyselyModuleOptions(): Promise<KyselyConfig> | KyselyConfig
 }
 
 export interface KyselyModuleAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
   inject?: InjectType
-  useClass?: Type<KyselyOptions>
+  useClass?: Type<KyselyConfig>
   useExisting?: Type<KyselyModuleOptionsFactory>
-  useFactory?: (...args: any[]) => Promise<KyselyOptions> | KyselyOptions
+  useFactory?: (...args: any[]) => Promise<KyselyConfig> | KyselyConfig
 }
