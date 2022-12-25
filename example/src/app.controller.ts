@@ -1,14 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
 import { InjectKysely } from 'nestjs-kysely';
 import { DB } from './@types';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(
-    @InjectKysely() private readonly db: DB,
-    private readonly appService: AppService,
-  ) {}
+  constructor(@InjectKysely() private readonly db: DB) {}
 
   @Get()
   async getHello(): Promise<string> {
@@ -18,7 +14,6 @@ export class AppController {
       .selectAll()
       .execute();
 
-    console.log(`result:${JSON.stringify(result)}`);
-    return this.appService.getHello();
+    return JSON.stringify(result);
   }
 }
