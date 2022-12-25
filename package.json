@@ -1,6 +1,6 @@
 {
   "name": "nestjs-kysely",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Kysely module for NestJS",
   "keywords": [
     "kysely",
