@@ -21,19 +21,26 @@ yarn add nestjs-kysely mysql2
 Register KyselyModule for your app.
 
 ```ts
-import { Module } from '@nestjs/common'
-import { KyselyModule } from 'nestjs-kysely'
+import { Module } from "@nestjs/common";
+import { MysqlDialect } from "kysely";
+import { createPool } from "mysql2";
+import { KyselyModule } from "nestjs-kysely";
+import { AppController } from "./app.controller";
 
 @Module({
   imports: [
     KyselyModule.forRoot({
-      engine: 'mysql',
-      host: '127.0.0.1',
-      user: 'root',
-      password: 'password',
-      database: 'kysely_test',
+      dialect: new MysqlDialect({
+        pool: createPool({
+          host: "127.0.0.1",
+          user: "root",
+          password: "password",
+          database: "kysely_test",
+        }),
+      }),
     }),
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
 ```
@@ -41,28 +48,23 @@ export class AppModule {}
 You can then inject the Kysely client into any of your injectables by using a custom decorator.
 
 ```ts
-import { Controller, Get } from '@nestjs/common'
-import { InjectKysely } from 'nestjs-kysely'
-import { DB } from './@types'
-import { AppService } from './app.service'
+import { Controller, Get } from "@nestjs/common";
+import { InjectKysely } from "nestjs-kysely";
+import { DB } from "./@types";
 
 @Controller()
 export class AppController {
-  constructor(
-    @InjectKysely() private readonly db: DB,
-    private readonly appService: AppService,
-  ) {}
+  constructor(@InjectKysely() private readonly db: DB) {}
 
   @Get()
   async getHello(): Promise<string> {
     const result = await this.db
-      .selectFrom('person')
-      .innerJoin('pet', 'pet.owner_id', 'person.id')
+      .selectFrom("person")
+      .innerJoin("pet", "pet.owner_id", "person.id")
       .selectAll()
-      .execute()
+      .execute();
 
-    console.log(`result:${JSON.stringify(result)}`)
-    return this.appService.getHello()
+    return JSON.stringify(result);
   }
 }
 ```
