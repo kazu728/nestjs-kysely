@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { Kysely, PostgresDialect } from "kysely";
+import { Pool } from "pg";
 import { KyselyModule } from "../kysely.module";
-import { commonOptions } from "../utility";
 import { InjectKysely } from "./kysely.decorator";
 
 describe("InjectKysely", () => {
@@ -16,7 +16,12 @@ describe("InjectKysely", () => {
       imports: [
         KyselyModule.forRoot({
           dialect: new PostgresDialect({
-            ...commonOptions,
+            pool: new Pool({
+              host: "127.0.0.1",
+              user: "root",
+              password: "password",
+              database: "kysely_test",
+            }),
           }),
         }),
       ],

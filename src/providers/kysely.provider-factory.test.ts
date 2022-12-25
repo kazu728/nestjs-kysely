@@ -1,15 +1,22 @@
 import { KyselyConfig, PostgresDialect } from "kysely";
 import { KYSELY_MODULE_OPTIONS_TOKEN } from "../constants";
 import { KyselyModuleAsyncOptions } from "../kysely.interfaces";
-import { commonOptions } from "../utility";
 import {
   createAsyncOptionsProvider,
   createAsyncProviders,
 } from "./kysely.provider-factory";
+import { Pool } from "pg";
 
 describe("Kysely provider factory", () => {
   const useFactory = (): KyselyConfig => ({
-    dialect: new PostgresDialect({ ...commonOptions }),
+    dialect: new PostgresDialect({
+      pool: new Pool({
+        host: "127.0.0.1",
+        user: "root",
+        password: "password",
+        database: "kysely_test",
+      }),
+    }),
   });
 
   test("should get async provider", () => {
