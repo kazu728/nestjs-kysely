@@ -23,7 +23,6 @@
   "scripts": {
     "build": "yarn clean && tsc -p tsconfig.lib.json",
     "clean": "rimraf ./dist",
-    "copy:to-exmaple": "yarn build && cp -R dist example/node_modules/nestjs-kysely/",
     "format": "deno fmt -c deno.jsonc",
     "lint": "deno lint -c deno.jsonc",
     "test": "jest"
