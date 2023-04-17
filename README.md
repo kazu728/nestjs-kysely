@@ -9,13 +9,13 @@
 ## install
 
 ```
-yarn add nestjs-kysely
+yarn add nestjs-kysely kysely
 ```
 
 ## Example
 
 ```
-yarn add nestjs-kysely mysql2
+yarn add nestjs-kysely kysely mysql2
 ```
 
 Register KyselyModule for your app.
