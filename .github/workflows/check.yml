@@ -20,6 +20,8 @@ jobs:
         run: yarn
       - name: Lint
         run: yarn lint
+      - name: Format
+        run: yarn format
       - name: Test
         run: yarn test
       - name: Upload coverage
