@@ -10,13 +10,10 @@ import { createAsyncProviders } from "./providers";
 
 @Global()
 @Module({})
-export class KyselyCoreModule extends OnModuleDestroy {
-  private static client: Kysely<unknown>;
-  
+export class KyselyCoreModule {
   public static forRoot(config: KyselyConfig): DynamicModule {
     const provider: Provider = createKyselyProvider(config);
-    KyselyCoreModule.client = provider.useValue;
-    
+
     return {
       exports: [provider],
       module: KyselyCoreModule,
@@ -37,9 +34,5 @@ export class KyselyCoreModule extends OnModuleDestroy {
       module: KyselyCoreModule,
       providers: [...createAsyncProviders(options), provider],
     };
-  }
-
-  async onModuleDestroy() {
-    await KyselyCoreModule.client?.destroy();
   }
 }
