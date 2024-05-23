@@ -5,26 +5,26 @@ import {
   KYSELY_MODULE_OPTIONS_TOKEN,
 } from "./constants";
 import { createKyselyClient, createKyselyProvider } from "./factories";
-import { KyselyModuleAsyncOptions } from "./kysely.interfaces";
+import { KyselyConfigWithNamespace, KyselyModuleAsyncOptions } from "./kysely.interfaces";
 import { createAsyncProviders } from "./providers";
 
 @Global()
 @Module({})
 export class KyselyCoreModule {
-  public static forRoot(config: KyselyConfig): DynamicModule {
-    const provider: Provider = createKyselyProvider(config);
+  public static forRoot(config: KyselyConfig | KyselyConfigWithNamespace[]): DynamicModule {
+    const providers: Provider[] = createKyselyProvider(config);
 
     return {
-      exports: [provider],
+      exports: providers,
       module: KyselyCoreModule,
-      providers: [provider],
+      providers: providers,
     };
   }
 
   public static forRootAsync(options: KyselyModuleAsyncOptions): DynamicModule {
     const provider: Provider = {
       inject: [KYSELY_MODULE_OPTIONS_TOKEN],
-      provide: KYSELY_MODULE_CONNECTION_TOKEN,
+      provide: KYSELY_MODULE_CONNECTION_TOKEN(options?.namespace),
       useFactory: (config: KyselyConfig) => createKyselyClient(config),
     };
 

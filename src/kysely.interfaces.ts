@@ -10,8 +10,13 @@ export interface KyselyModuleOptionsFactory {
 
 export interface KyselyModuleAsyncOptions
   extends Pick<ModuleMetadata, "imports"> {
+  namespace?: string;
   inject?: InjectType;
   useClass?: Type<KyselyConfig>;
   useExisting?: Type<KyselyModuleOptionsFactory>;
   useFactory?: (...args: any[]) => Promise<KyselyConfig> | KyselyConfig;
+}
+
+export interface KyselyConfigWithNamespace extends KyselyConfig {
+  namespace: string;
 }
