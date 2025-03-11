@@ -42,7 +42,7 @@ describe("InjectKysely with forRootAsync", () => {
   let module: TestingModule;
 
   class TestService {
-    constructor(@InjectKysely() readonly db: Kysely<unknown>) { }
+    constructor(@InjectKysely() readonly db: Kysely<unknown>) {}
   }
 
   beforeEach(async () => {
@@ -58,7 +58,7 @@ describe("InjectKysely with forRootAsync", () => {
                 database: "kysely_test",
               }),
             }),
-          })
+          }),
         }),
       ],
       providers: [TestService],
@@ -78,9 +78,9 @@ describe("InjectKysely with two namespaces", () => {
 
   class TestService {
     constructor(
-      @InjectKysely('firstNamespace') readonly firstDB: Kysely<unknown>,
-      @InjectKysely('secondNamespace') readonly secondDB: Kysely<unknown>
-    ) { }
+      @InjectKysely("firstNamespace") readonly firstDB: Kysely<unknown>,
+      @InjectKysely("secondNamespace") readonly secondDB: Kysely<unknown>,
+    ) {}
   }
 
   beforeEach(async () => {
@@ -88,7 +88,7 @@ describe("InjectKysely with two namespaces", () => {
       imports: [
         KyselyModule.forRoot([
           {
-            namespace: 'firstNamespace',
+            namespace: "firstNamespace",
             dialect: new PostgresDialect({
               pool: new Pool({
                 host: "127.0.0.1",
@@ -99,11 +99,11 @@ describe("InjectKysely with two namespaces", () => {
             }),
           },
           {
-            namespace: 'secondNamespace',
+            namespace: "secondNamespace",
             dialect: new SqliteDialect({
               database: new Database(),
             }),
-          }
+          },
         ]),
       ],
       providers: [TestService],
@@ -125,16 +125,16 @@ describe("InjectKysely with two namespaces with forRootAsync", () => {
 
   class TestService {
     constructor(
-      @InjectKysely('firstDB') readonly firstDB: Kysely<unknown>,
-      @InjectKysely('secondDB') readonly secondDB: Kysely<unknown>
-    ) { }
+      @InjectKysely("firstDB") readonly firstDB: Kysely<unknown>,
+      @InjectKysely("secondDB") readonly secondDB: Kysely<unknown>,
+    ) {}
   }
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
       imports: [
         KyselyModule.forRootAsync({
-          namespace: 'firstDB',
+          namespace: "firstDB",
           useFactory: () => (
             {
               dialect: new PostgresDialect({
@@ -146,17 +146,17 @@ describe("InjectKysely with two namespaces with forRootAsync", () => {
                 }),
               }),
             }
-          )
+          ),
         }),
         KyselyModule.forRootAsync({
-          namespace: 'secondDB',
+          namespace: "secondDB",
           useFactory: () => (
             {
               dialect: new SqliteDialect({
                 database: new Database(),
               }),
             }
-          )
+          ),
         }),
       ],
       providers: [TestService],
