@@ -21,12 +21,12 @@
     "README.md"
   ],
   "scripts": {
-    "build": "yarn clean && tsc -p tsconfig.lib.json",
+    "build": "npm run clean && tsc -p tsconfig.lib.json",
     "clean": "rimraf ./dist",
     "format": "deno fmt -c deno.jsonc",
     "lint": "deno lint -c deno.jsonc",
     "test": "jest",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0",
