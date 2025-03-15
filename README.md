@@ -10,13 +10,13 @@ a type-safe query builder.
 ## install
 
 ```
-yarn add nestjs-kysely kysely
+npm i nestjs-kysely kysely
 ```
 
 ## Example
 
 ```
-yarn add nestjs-kysely kysely mysql2
+npm i nestjs-kysely kysely mysql2
 ```
 
 Register KyselyModule for your app.

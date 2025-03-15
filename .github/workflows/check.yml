@@ -10,20 +10,20 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 22.x
-          cache: yarn
+          cache: 'npm'
       - name: Use Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.*
 
       - name: Install dependencies
-        run: yarn
+        run: npm ci
       - name: Lint
-        run: yarn lint
+        run: npm run lint
       - name: Format
-        run: yarn format
+        run: npm run format
       - name: Test
-        run: yarn test
+        run: npm test
       - name: Upload coverage
         uses: codecov/codecov-action@v2
         with:
