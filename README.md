@@ -4,7 +4,8 @@
 [![check](https://github.com/kzmat/nestjs-kysely/actions/workflows/check.yml/badge.svg)](https://github.com/kzmat/nestjs-kysely/actions/workflows/check.yml)
 [![codecov](https://codecov.io/gh/kzmat/nestjs-kysely/branch/master/graph/badge.svg?token=5PN87HH33L)](https://codecov.io/gh/kzmat/nestjs-kysely)
 
-`nestjs-kysely` implements a module that provides the client of Kysely, which is a type-safe query builder.
+`nestjs-kysely` implements a module that provides the client of Kysely, which is
+a type-safe query builder.
 
 ## install
 
@@ -45,12 +46,13 @@ import { AppController } from "./app.controller";
 export class AppModule {}
 ```
 
-You can then inject the Kysely client into any of your injectables by using a custom decorator.
+You can then inject the Kysely client into any of your injectables by using a
+custom decorator.
 
 ```ts
 import { Controller, Get } from "@nestjs/common";
 import { InjectKysely } from "nestjs-kysely";
-import { Kysely } from 'kysely';
+import { Kysely } from "kysely";
 import { DB } from "./@types";
 
 @Controller()
@@ -88,7 +90,7 @@ import { AppController } from "./app.controller";
   imports: [
     KyselyModule.forRoot([
       {
-        namespace: 'mysql',
+        namespace: "mysql",
         dialect: new MysqlDialect({
           pool: createPool({
             host: "127.0.0.1",
@@ -99,12 +101,11 @@ import { AppController } from "./app.controller";
         }),
       },
       {
-        namespace: 'sqlite',
+        namespace: "sqlite",
         dialect: new SqliteDialect({
           database: new Database(),
         }),
-      }
-
+      },
     ]),
   ],
   controllers: [AppController],
@@ -125,7 +126,7 @@ import { AppController } from "./app.controller";
 @Module({
   imports: [
     KyselyModule.forRootAsync({
-      namespace: 'mysql',
+      namespace: "mysql",
       useFactory: () => (
         {
           dialect: new MysqlDialect({
@@ -137,17 +138,17 @@ import { AppController } from "./app.controller";
             }),
           }),
         }
-      )
+      ),
     }),
     KyselyModule.forRootAsync({
-      namespace: 'sqlite',
+      namespace: "sqlite",
       useFactory: () => (
         {
           dialect: new SqliteDialect({
             database: new Database(),
           }),
         }
-      )
+      ),
     }),
   ],
   controllers: [AppController],
@@ -157,19 +158,20 @@ export class AppModule {}
 
 ## Use it
 
-You can then inject the Kysely client into any of your injectables by using a custom decorator with namespace as input.
+You can then inject the Kysely client into any of your injectables by using a
+custom decorator with namespace as input.
 
 ```ts
 import { Controller, Get } from "@nestjs/common";
 import { InjectKysely } from "nestjs-kysely";
-import { Kysely } from 'kysely';
+import { Kysely } from "kysely";
 import { DB } from "./@types";
 
 @Controller()
 export class AppController {
   constructor(
-    @InjectKysely('mysql') private readonly mysql: Kysely<unknown>,
-    @InjectKysely('sqlite') private readonly sqlite: Kysely<unknown>,
+    @InjectKysely("mysql") private readonly mysql: Kysely<unknown>,
+    @InjectKysely("sqlite") private readonly sqlite: Kysely<unknown>,
   ) {}
 
   @Get()
