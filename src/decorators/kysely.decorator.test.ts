@@ -1,8 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { Kysely, PostgresDialect, SqliteDialect } from "kysely";
 import { Pool } from "pg";
-import { KyselyModule } from "../kysely.module";
-import { InjectKysely } from "./kysely.decorator";
+import { KyselyModule } from "../kysely.module.js";
+import { InjectKysely } from "./kysely.decorator.js";
 import Database from "better-sqlite3";
 
 describe("InjectKysely", () => {

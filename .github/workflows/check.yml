@@ -10,7 +10,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 22.x
-          cache: 'npm'
+          cache: "npm"
       - name: Use Deno
         uses: denoland/setup-deno@v1
         with:

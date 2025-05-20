@@ -3,14 +3,14 @@ import { KyselyConfig } from "kysely";
 import {
   KYSELY_MODULE_CONNECTION_TOKEN,
   KYSELY_MODULE_OPTIONS_TOKEN,
-} from "./constants";
-import { createKyselyClient, createKyselyProvider } from "./factories";
+} from "./constants/index.js";
+import { createKyselyClient, createKyselyProvider } from "./factories/index.js";
 import {
   KyselyConfigWithNamespace,
   KyselyModuleAsyncOptions,
-} from "./kysely.interfaces";
-import { createAsyncProviders } from "./providers";
-import { KyselyService } from "./kysely.service";
+} from "./kysely.interfaces.js";
+import { createAsyncProviders } from "./providers/index.js";
+import { KyselyService } from "./kysely.service.js";
 
 @Global()
 @Module({})
