@@ -1,1 +1,1 @@
-export * from "./kysely.constants";
+export * from "./kysely.constants.js";

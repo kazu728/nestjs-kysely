@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   collectCoverage: true,
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
   coverageDirectory: "./coverage",
@@ -13,5 +13,15 @@ module.exports = {
   roots: ["<rootDir>/src"],
   testEnvironment: "node",
   testRegex: "test.ts",
-  transform: { "^.+\\.ts": "ts-jest" },
+  transform: {
+    "^.+\\.ts$": ["ts-jest", {
+      useESM: true,
+      tsconfig: "tsconfig.esm.json",
+      isolatedModules: false
+    }]
+  },
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1"
+  },
+  extensionsToTreatAsEsm: [".ts"]
 };

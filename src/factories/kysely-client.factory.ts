@@ -1,8 +1,8 @@
 import { Provider } from "@nestjs/common";
 import { Kysely, KyselyConfig } from "kysely";
-import { KyselyConfigWithNamespace } from "kysely.interfaces";
-import { KYSELY_MODULE_CONNECTION_TOKEN } from "../constants";
-import { KyselyService } from "../kysely.service";
+import { KyselyConfigWithNamespace } from "../kysely.interfaces.js";
+import { KYSELY_MODULE_CONNECTION_TOKEN } from "../constants/index.js";
+import { KyselyService } from "../kysely.service.js";
 
 export const createKyselyClient = <DB>(
   { config, service }: { config: KyselyConfig; service: KyselyService },

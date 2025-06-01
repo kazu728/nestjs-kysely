@@ -1,10 +1,10 @@
 import { DynamicModule, Module } from "@nestjs/common";
 import { KyselyConfig } from "kysely";
-import { KyselyCoreModule } from "./kysely.core.module";
+import { KyselyCoreModule } from "./kysely.core.module.js";
 import {
   KyselyConfigWithNamespace,
   KyselyModuleAsyncOptions,
-} from "./kysely.interfaces";
+} from "./kysely.interfaces.js";
 
 @Module({})
 export class KyselyModule {
