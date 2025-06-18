@@ -1,9 +1,9 @@
 import { Provider } from "@nestjs/common";
-import { KYSELY_MODULE_OPTIONS_TOKEN } from "../constants/index.js";
+import { KYSELY_MODULE_OPTIONS_TOKEN } from "../constants";
 import {
   KyselyModuleAsyncOptions,
   KyselyModuleOptionsFactory,
-} from "../kysely.interfaces.js";
+} from "../kysely.interfaces";
 
 export const createAsyncProviders = (
   options: KyselyModuleAsyncOptions,

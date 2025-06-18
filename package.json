@@ -1,6 +1,6 @@
 {
   "name": "nestjs-kysely",
-  "version": "2.0.0",
+  "version": "1.1.0",
   "description": "Kysely module for NestJS",
   "keywords": [
     "kysely",
@@ -13,17 +13,7 @@
     "url": "https://github.com/kzmat/nestjs-kysely"
   },
   "bugs": "https://github.com/kzmat/nestjs-kysely/issues",
-  "type": "module",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "types": "./dist/esm/index.d.ts"
-    }
-  },
+  "main": "./dist/index.js",
   "files": [
     "dist/**/*",
     "LICENSE",
@@ -31,9 +21,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "npm run clean && tsc -p tsconfig.lib.json",
     "clean": "rimraf ./dist",
     "format": "deno fmt -c deno.jsonc",
     "lint": "deno lint -c deno.jsonc",

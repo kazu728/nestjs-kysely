@@ -1,1 +1,1 @@
-export * from "./kysely.provider-factory.js";
+export * from "./kysely.provider-factory";
