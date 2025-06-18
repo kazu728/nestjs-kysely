@@ -1,8 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { KyselyModule } from "./kysely.module.js";
-import { KyselyService } from "./kysely.service.js";
+import { KyselyModule } from "./kysely.module";
+import { KyselyService } from "./kysely.service";
 
 enum EDatabases {
   DB_1 = "kysely_test_1",

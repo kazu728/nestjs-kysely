@@ -1,1 +1,1 @@
-export * from "./kysely.decorator.js";
+export * from "./kysely.decorator";
