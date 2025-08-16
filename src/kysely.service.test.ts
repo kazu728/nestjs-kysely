@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach, vi } from "vitest";
 import { Test, TestingModule } from "@nestjs/testing";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
@@ -42,12 +43,12 @@ describe("KyselyService - onApplicationShutdown", () => {
 
   test("should destroy all active Kysely clients on shutdown", async () => {
     const kyselyService = module.get(KyselyService);
-    const spyOnApplicationShutdown = jest.spyOn(
+    const spyOnApplicationShutdown = vi.spyOn(
       kyselyService,
       "onApplicationShutdown",
     );
     const destroySpies = kyselyService.activeClients.map((client) =>
-      jest.spyOn(client, "destroy")
+      vi.spyOn(client, "destroy")
     );
 
     expect(kyselyService.activeClients.length).toBe(2);
@@ -67,8 +68,8 @@ describe("KyselyService - onApplicationShutdown", () => {
 
     const kyselyService = module.get(KyselyService);
     const client = kyselyService.activeClients[0]!;
-    const destroySpy = jest.spyOn(client, "destroy");
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    const destroySpy = vi.spyOn(client, "destroy");
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => { });
 
     destroySpy.mockImplementation(() => {
       throw new Error(CLIENT_DESTROY_FAIL_ERROR_MESSAGE);
