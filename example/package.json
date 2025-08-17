@@ -17,7 +17,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:cjs": "cd cjs && npm install && npm test",
+    "test:esm": "cd esm && npm install && npm test",
+    "test:modules": "npm run test:cjs && npm run test:esm"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.11",

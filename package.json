@@ -13,7 +13,16 @@
     "url": "https://github.com/kzmat/nestjs-kysely"
   },
   "bugs": "https://github.com/kzmat/nestjs-kysely/issues",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "files": [
     "dist/**/*",
     "LICENSE",
@@ -21,7 +30,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && tsc -p tsconfig.lib.json",
+    "build": "tsdown",
     "clean": "rimraf ./dist",
     "format": "deno fmt -c deno.jsonc",
     "lint": "deno lint -c deno.jsonc",
@@ -50,6 +59,7 @@
     "reflect-metadata": "^0.2.2",
     "rimraf": "^6.0.1",
     "rxjs": "^7.8.2",
+    "tsdown": "^0.14.1",
     "typescript": "^5.8.2",
     "vitest": "^3.2.4"
   }

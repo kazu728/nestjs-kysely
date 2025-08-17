@@ -1,0 +1,17 @@
+{
+  "name": "nestjs-kysely-cjs-test",
+  "version": "0.0.1",
+  "description": "CommonJS test for nestjs-kysely",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "nestjs-kysely": "file:../../",
+    "@nestjs/common": "^11.0.11",
+    "@nestjs/core": "^11.0.11",
+    "kysely": "^0.27.6",
+    "reflect-metadata": "^0.2.2"
+  }
+}
