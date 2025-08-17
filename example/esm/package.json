@@ -1,0 +1,18 @@
+{
+  "name": "nestjs-kysely-esm-test",
+  "version": "0.0.1",
+  "description": "ESM test for nestjs-kysely",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "node index.mjs"
+  },
+  "dependencies": {
+    "nestjs-kysely": "file:../../",
+    "@nestjs/common": "^11.0.11",
+    "@nestjs/core": "^11.0.11",
+    "kysely": "^0.27.6",
+    "reflect-metadata": "^0.2.2"
+  }
+}

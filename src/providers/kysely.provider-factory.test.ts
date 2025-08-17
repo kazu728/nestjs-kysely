@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import { KyselyConfig, PostgresDialect } from "kysely";
 import { KYSELY_MODULE_OPTIONS_TOKEN } from "../constants";
 import { KyselyModuleAsyncOptions } from "../kysely.interfaces";
