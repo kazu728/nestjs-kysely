@@ -1,18 +1,18 @@
 {
   "name": "nestjs-kysely",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Kysely module for NestJS",
   "keywords": [
     "kysely",
     "nestjs"
   ],
-  "author": "kzmat",
+  "author": "kazu728",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kzmat/nestjs-kysely"
+    "url": "https://github.com/kazu728/nestjs-kysely"
   },
-  "bugs": "https://github.com/kzmat/nestjs-kysely/issues",
+  "bugs": "https://github.com/kazu728/nestjs-kysely/issues",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "type": "module",
