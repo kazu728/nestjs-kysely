@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: 22.x
           registry-url: "https://registry.npmjs.org"
-      - run: npm install @rolldown/binding-linux-x64-gnu
       - run: npm ci
+      - run: npm install --no-save @rolldown/binding-linux-x64-gnu@1.0.0-beta.32
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
