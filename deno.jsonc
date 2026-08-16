@@ -6,14 +6,9 @@
     "strict": true
   },
   "lint": {
-    "files": {
-      "include": [
-        "src"
-      ],
-      "exclude": [
-        "node_modules"
-      ]
-    },
+    "include": [
+      "src"
+    ],
     "rules": {
       "tags": [
         "recommended"
@@ -27,14 +22,9 @@
     }
   },
   "fmt": {
-    "files": {
-      "include": [
-        "src",
-        "deno.jsonc"
-      ],
-      "exclude": [
-        "node_modules"
-      ]
-    }
+    "include": [
+      "src",
+      "deno.jsonc"
+    ]
   }
 }
