@@ -6,11 +6,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: true,
-  platform: 'node',
-  external: [
-    '@nestjs/common',
-    '@nestjs/core',
-    'kysely',
-    'reflect-metadata'
-  ]
+  platform: 'node'
 })
