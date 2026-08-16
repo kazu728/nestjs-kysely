@@ -1,6 +1,6 @@
 import { Provider } from "@nestjs/common";
 import { Kysely, KyselyConfig } from "kysely";
-import { KyselyConfigWithNamespace } from "kysely.interfaces";
+import { KyselyConfigWithNamespace } from "../kysely.interfaces";
 import { KYSELY_MODULE_CONNECTION_TOKEN } from "../constants";
 import { KyselyService } from "../kysely.service";
 
