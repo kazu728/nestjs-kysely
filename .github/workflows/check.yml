@@ -1,5 +1,9 @@
 name: check
-on: pull_request
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
   build:
@@ -19,10 +23,17 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Format
-        run: npm run format
+        run: npm run format:check
+      - name: Type check
+        run: npm run typecheck
       - name: Test
         run: npm test
       - name: Upload coverage
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Build
+        run: npm run build
+      - name: Test module resolution
+        run: npm run test:modules
+        working-directory: example

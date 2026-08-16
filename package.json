@@ -36,7 +36,9 @@
     "build": "tsdown",
     "clean": "rimraf ./dist",
     "format": "deno fmt -c deno.jsonc",
+    "format:check": "deno fmt --check -c deno.jsonc",
     "lint": "deno lint -c deno.jsonc",
+    "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "prepublishOnly": "npm run build"
