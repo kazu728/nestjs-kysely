@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { Test, TestingModule } from "@nestjs/testing";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
@@ -69,7 +69,9 @@ describe("KyselyService - onApplicationShutdown", () => {
     const kyselyService = module.get(KyselyService);
     const client = kyselyService.activeClients[0]!;
     const destroySpy = vi.spyOn(client, "destroy");
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => { });
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(
+      () => {},
+    );
 
     destroySpy.mockImplementation(() => {
       throw new Error(CLIENT_DESTROY_FAIL_ERROR_MESSAGE);
