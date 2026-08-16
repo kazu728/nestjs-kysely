@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "postinstall": "cd .. && npm install && npm run build && cp -R dist example/node_modules/nestjs-kysely/",
+    "postinstall": "cd .. && npm install && npm run build",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^11.2.1",
     "kysely": "^0.29.5",
     "mysql2": "^3.23.3",
+    "nestjs-kysely": "file:..",
     "reflect-metadata": "^0.2.2",
     "rimraf": "^6.0.1",
     "rxjs": "^7.8.2"
