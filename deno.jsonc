@@ -1,10 +1,4 @@
 {
-  "compilerOptions": {
-    "lib": [
-      "deno.window"
-    ],
-    "strict": true
-  },
   "lint": {
     "include": [
       "src"
@@ -17,7 +11,8 @@
         "no-implicit-any",
         "no-explicit-any",
         "require-await",
-        "ban-ts-comment"
+        "ban-ts-comment",
+        "no-sloppy-imports"
       ]
     }
   },

@@ -53,7 +53,6 @@ describe("KyselyService - onApplicationShutdown", () => {
 
     expect(kyselyService.activeClients.length).toBe(2);
 
-    // Shutdown the application
     await module.close();
 
     expect(spyOnApplicationShutdown).toHaveBeenCalledTimes(1);
@@ -77,7 +76,6 @@ describe("KyselyService - onApplicationShutdown", () => {
       throw new Error(CLIENT_DESTROY_FAIL_ERROR_MESSAGE);
     });
 
-    // Shutdown the application
     await module.close();
 
     expect(destroySpy).toHaveBeenCalledTimes(1);
