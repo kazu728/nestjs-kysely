@@ -1,7 +1,8 @@
 {
   "lint": {
     "include": [
-      "src"
+      "src",
+      "example/src"
     ],
     "rules": {
       "tags": [
@@ -19,6 +20,7 @@
   "fmt": {
     "include": [
       "src",
+      "example/src",
       "deno.jsonc"
     ]
   }
