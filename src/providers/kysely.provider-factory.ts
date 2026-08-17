@@ -1,5 +1,5 @@
 import { Provider } from "@nestjs/common";
-import { KYSELY_MODULE_OPTIONS_TOKEN } from "../constants";
+import { KYSELY_MODULE_OPTIONS_TOKEN } from "../constants/kysely.constants";
 import {
   KyselyModuleAsyncOptions,
   KyselyModuleOptionsFactory,

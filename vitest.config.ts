@@ -11,8 +11,6 @@ export default defineConfig({
       exclude: [
         'src/index.ts',
         'src/kysely.interfaces.ts',
-        'src/decorators/index.ts',
-        'src/factories/index.ts',
       ],
       reportsDirectory: './coverage',
     },
