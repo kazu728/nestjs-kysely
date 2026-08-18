@@ -12,7 +12,7 @@ export interface KyselyModuleAsyncOptions
   extends Pick<ModuleMetadata, "imports"> {
   namespace?: string;
   inject?: InjectType;
-  useClass?: Type<KyselyConfig>;
+  useClass?: Type<KyselyModuleOptionsFactory>;
   useExisting?: Type<KyselyModuleOptionsFactory>;
   useFactory?: (...args: any[]) => Promise<KyselyConfig> | KyselyConfig;
 }

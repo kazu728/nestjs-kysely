@@ -27,14 +27,13 @@ export const createAsyncOptionsProvider = (
     };
   }
 
-  if (useExisting) {
-    return {
-      inject: [useExisting || useClass],
-      provide: KYSELY_MODULE_OPTIONS_TOKEN,
-      useFactory: (optionsFactory: KyselyModuleOptionsFactory) =>
-        optionsFactory.createKyselyModuleOptions(),
-    };
-  }
+  const optionsFactoryType = useExisting ?? useClass;
+  if (!optionsFactoryType) throw new Error("Invalid options");
 
-  throw new Error("Invalid options");
+  return {
+    inject: [optionsFactoryType],
+    provide: KYSELY_MODULE_OPTIONS_TOKEN,
+    useFactory: (optionsFactory: KyselyModuleOptionsFactory) =>
+      optionsFactory.createKyselyModuleOptions(),
+  };
 };
