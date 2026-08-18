@@ -1,8 +1,8 @@
 # nestjs-kysely
 
 [![npm version](https://badge.fury.io/js/nestjs-kysely.svg)](https://badge.fury.io/js/nestjs-kysely.svg)
-[![check](https://github.com/kzmat/nestjs-kysely/actions/workflows/check.yml/badge.svg)](https://github.com/kzmat/nestjs-kysely/actions/workflows/check.yml)
-[![codecov](https://codecov.io/gh/kzmat/nestjs-kysely/branch/master/graph/badge.svg?token=5PN87HH33L)](https://codecov.io/gh/kzmat/nestjs-kysely)
+[![check](https://github.com/kazu728/nestjs-kysely/actions/workflows/check.yml/badge.svg)](https://github.com/kazu728/nestjs-kysely/actions/workflows/check.yml)
+[![codecov](https://codecov.io/gh/kazu728/nestjs-kysely/branch/master/graph/badge.svg?token=5PN87HH33L)](https://codecov.io/gh/kazu728/nestjs-kysely)
 
 `nestjs-kysely` implements a module that provides the client of Kysely, which is
 a type-safe query builder.
@@ -170,13 +170,13 @@ import { DB } from "./@types";
 @Controller()
 export class AppController {
   constructor(
-    @InjectKysely("mysql") private readonly mysql: Kysely<unknown>,
-    @InjectKysely("sqlite") private readonly sqlite: Kysely<unknown>,
+    @InjectKysely("mysql") private readonly mysql: Kysely<DB>,
+    @InjectKysely("sqlite") private readonly sqlite: Kysely<DB>,
   ) {}
 
   @Get()
   async getHello(): Promise<string> {
-    const result = await this.db
+    const result = await this.mysql
       .selectFrom("person")
       .innerJoin("pet", "pet.owner_id", "person.id")
       .selectAll()
