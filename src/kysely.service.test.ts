@@ -3,7 +3,7 @@ import { Logger } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Kysely, SqliteDialect } from "kysely";
 import Database from "better-sqlite3";
-import { KYSELY_MODULE_CONNECTION_TOKEN } from "./constants/kysely.constants";
+import { KYSELY_MODULE_CONNECTION_TOKEN } from "./kysely.constants";
 import { KyselyModule } from "./kysely.module";
 
 describe("KyselyService - onApplicationShutdown", () => {

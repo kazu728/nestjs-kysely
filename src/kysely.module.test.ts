@@ -3,7 +3,7 @@ import { Test } from "@nestjs/testing";
 import { Module } from "@nestjs/common";
 import { Kysely, KyselyConfig, SqliteDialect } from "kysely";
 import Database from "better-sqlite3";
-import { KYSELY_MODULE_CONNECTION_TOKEN } from "./constants/kysely.constants";
+import { KYSELY_MODULE_CONNECTION_TOKEN } from "./kysely.constants";
 import { KyselyModuleOptionsFactory } from "./kysely.interfaces";
 import { KyselyModule } from "./kysely.module";
 
@@ -58,5 +58,9 @@ describe("KyselyModule.forRootAsync", () => {
     }).compile();
 
     expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(Kysely);
+  });
+
+  test("should throw without useFactory, useClass or useExisting", () => {
+    expect(() => KyselyModule.forRootAsync({})).toThrow("Invalid options");
   });
 });
