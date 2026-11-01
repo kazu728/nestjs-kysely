@@ -13,6 +13,20 @@ a type-safe query builder.
 npm i nestjs-kysely kysely
 ```
 
+## Supported versions
+
+| nestjs-kysely | NestJS | Kysely |
+| ------------- | ------ | ------ |
+| 4.x           | 11, 12 | 0.x    |
+| 3.x           | 8–12   | 0.x    |
+
+4.x supports the NestJS majors that still receive patch releases. On NestJS
+8–10, install 3.x:
+
+```
+npm i nestjs-kysely@3 kysely
+```
+
 ## Example
 
 ```
