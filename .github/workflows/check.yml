@@ -34,6 +34,5 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build
         run: npm run build
-      - name: Test module resolution
-        run: npm run test:modules
-        working-directory: example
+      - name: Test package
+        run: npm run test:package
