@@ -1,175 +1,77 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "vitest";
 import { Test, TestingModule } from "@nestjs/testing";
-import { Kysely, PostgresDialect, SqliteDialect } from "kysely";
-import { Pool } from "pg";
-import { KyselyModule } from "./kysely.module";
-import { InjectKysely } from "./kysely.decorator";
+import { Kysely, KyselyConfig, SqliteDialect } from "kysely";
 import Database from "better-sqlite3";
+import { InjectKysely } from "./kysely.decorator";
+import { KyselyModule } from "./kysely.module";
+
+const sqlite = (): KyselyConfig => ({
+  dialect: new SqliteDialect({ database: new Database() }),
+});
+
+class DefaultConsumer {
+  constructor(@InjectKysely() readonly db: Kysely<unknown>) {}
+}
+
+class NamespacedConsumer {
+  constructor(
+    @InjectKysely("first") readonly first: Kysely<unknown>,
+    @InjectKysely("second") readonly second: Kysely<unknown>,
+  ) {}
+}
 
 describe("InjectKysely", () => {
   let module: TestingModule;
 
-  class TestService {
-    constructor(@InjectKysely() readonly db: Kysely<unknown>) {}
-  }
+  afterEach(() => module.close());
 
-  beforeEach(async () => {
+  test("should inject the client registered with forRoot", async () => {
     module = await Test.createTestingModule({
-      imports: [
-        KyselyModule.forRoot({
-          dialect: new PostgresDialect({
-            pool: new Pool({
-              host: "127.0.0.1",
-              user: "root",
-              password: "password",
-              database: "kysely_test",
-            }),
-          }),
-        }),
-      ],
-      providers: [TestService],
+      imports: [KyselyModule.forRoot(sqlite())],
+      providers: [DefaultConsumer],
     }).compile();
+
+    expect(module.get(DefaultConsumer).db).toBeInstanceOf(Kysely);
   });
 
-  test("should inject the kysely client", () => {
-    const testService = module.get(TestService);
-
-    expect(testService).toHaveProperty("db");
-    expect(testService.db).toBeInstanceOf(Kysely);
-  });
-});
-
-describe("InjectKysely with forRootAsync", () => {
-  let module: TestingModule;
-
-  class TestService {
-    constructor(@InjectKysely() readonly db: Kysely<unknown>) {}
-  }
-
-  beforeEach(async () => {
+  test("should inject the client registered with forRootAsync", async () => {
     module = await Test.createTestingModule({
-      imports: [
-        KyselyModule.forRootAsync({
-          useFactory: () => ({
-            dialect: new PostgresDialect({
-              pool: new Pool({
-                host: "127.0.0.1",
-                user: "root",
-                password: "password",
-                database: "kysely_test",
-              }),
-            }),
-          }),
-        }),
-      ],
-      providers: [TestService],
+      imports: [KyselyModule.forRootAsync({ useFactory: sqlite })],
+      providers: [DefaultConsumer],
     }).compile();
+
+    expect(module.get(DefaultConsumer).db).toBeInstanceOf(Kysely);
   });
 
-  test("should inject the kysely client", () => {
-    const testService = module.get(TestService);
-
-    expect(testService).toHaveProperty("db");
-    expect(testService.db).toBeInstanceOf(Kysely);
-  });
-});
-
-describe("InjectKysely with two namespaces", () => {
-  let module: TestingModule;
-
-  class TestService {
-    constructor(
-      @InjectKysely("firstNamespace") readonly firstDB: Kysely<unknown>,
-      @InjectKysely("secondNamespace") readonly secondDB: Kysely<unknown>,
-    ) {}
-  }
-
-  beforeEach(async () => {
+  test("should inject each namespaced client registered with forRoot", async () => {
     module = await Test.createTestingModule({
       imports: [
         KyselyModule.forRoot([
-          {
-            namespace: "firstNamespace",
-            dialect: new PostgresDialect({
-              pool: new Pool({
-                host: "127.0.0.1",
-                user: "root",
-                password: "password",
-                database: "kysely_test",
-              }),
-            }),
-          },
-          {
-            namespace: "secondNamespace",
-            dialect: new SqliteDialect({
-              database: new Database(),
-            }),
-          },
+          { namespace: "first", ...sqlite() },
+          { namespace: "second", ...sqlite() },
         ]),
       ],
-      providers: [TestService],
+      providers: [NamespacedConsumer],
     }).compile();
+
+    const { first, second } = module.get(NamespacedConsumer);
+    expect(first).toBeInstanceOf(Kysely);
+    expect(second).toBeInstanceOf(Kysely);
+    expect(first).not.toBe(second);
   });
 
-  test("should inject the kysely client in both namespaces", () => {
-    const testService = module.get(TestService);
-
-    expect(testService).toHaveProperty("firstDB");
-    expect(testService).toHaveProperty("secondDB");
-    expect(testService.firstDB).toBeInstanceOf(Kysely);
-    expect(testService.secondDB).toBeInstanceOf(Kysely);
-  });
-});
-
-describe("InjectKysely with two namespaces with forRootAsync", () => {
-  let module: TestingModule;
-
-  class TestService {
-    constructor(
-      @InjectKysely("firstDB") readonly firstDB: Kysely<unknown>,
-      @InjectKysely("secondDB") readonly secondDB: Kysely<unknown>,
-    ) {}
-  }
-
-  beforeEach(async () => {
+  test("should inject each namespaced client registered with forRootAsync", async () => {
     module = await Test.createTestingModule({
       imports: [
-        KyselyModule.forRootAsync({
-          namespace: "firstDB",
-          useFactory: () => (
-            {
-              dialect: new PostgresDialect({
-                pool: new Pool({
-                  host: "127.0.0.1",
-                  user: "root",
-                  password: "password",
-                  database: "kysely_test",
-                }),
-              }),
-            }
-          ),
-        }),
-        KyselyModule.forRootAsync({
-          namespace: "secondDB",
-          useFactory: () => (
-            {
-              dialect: new SqliteDialect({
-                database: new Database(),
-              }),
-            }
-          ),
-        }),
+        KyselyModule.forRootAsync({ namespace: "first", useFactory: sqlite }),
+        KyselyModule.forRootAsync({ namespace: "second", useFactory: sqlite }),
       ],
-      providers: [TestService],
+      providers: [NamespacedConsumer],
     }).compile();
-  });
 
-  test("should inject the kysely client in both namespaces", () => {
-    const testService = module.get(TestService);
-
-    expect(testService).toHaveProperty("firstDB");
-    expect(testService).toHaveProperty("secondDB");
-    expect(testService.firstDB).toBeInstanceOf(Kysely);
-    expect(testService.secondDB).toBeInstanceOf(Kysely);
+    const { first, second } = module.get(NamespacedConsumer);
+    expect(first).toBeInstanceOf(Kysely);
+    expect(second).toBeInstanceOf(Kysely);
+    expect(first).not.toBe(second);
   });
 });
