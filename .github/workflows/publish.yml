@@ -17,4 +17,17 @@ jobs:
           node-version: 24.x
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
-      - run: npm publish
+      # npm refuses to publish a prerelease, or a version below the current latest, without an explicit dist-tag.
+      - name: Publish
+        run: |
+          version=$(node -p "require('./package.json').version")
+          major=${version%%.*}
+          latest_major=$(npm view nestjs-kysely dist-tags.latest | cut -d. -f1)
+          if [[ $version == *-* ]]; then
+            tag=next
+          elif (( major < latest_major )); then
+            tag=latest-$major
+          else
+            tag=latest
+          fi
+          npm publish --tag "$tag"
