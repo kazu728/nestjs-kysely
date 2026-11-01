@@ -1,8 +1,5 @@
-import { Abstract, ModuleMetadata, Type } from "@nestjs/common";
+import { FactoryProvider, ModuleMetadata, Type } from "@nestjs/common";
 import { KyselyConfig } from "kysely";
-
-type InjectType =
-  (string | symbol | Type<any> | Abstract<any> | (() => void))[];
 
 export interface KyselyModuleOptionsFactory {
   createKyselyModuleOptions(): Promise<KyselyConfig> | KyselyConfig;
@@ -11,7 +8,7 @@ export interface KyselyModuleOptionsFactory {
 export interface KyselyModuleAsyncOptions
   extends Pick<ModuleMetadata, "imports"> {
   namespace?: string;
-  inject?: InjectType;
+  inject?: FactoryProvider["inject"];
   useClass?: Type<KyselyModuleOptionsFactory>;
   useExisting?: Type<KyselyModuleOptionsFactory>;
   useFactory?: (...args: any[]) => Promise<KyselyConfig> | KyselyConfig;

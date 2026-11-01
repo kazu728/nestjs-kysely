@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { Test } from "@nestjs/testing";
 import { Module } from "@nestjs/common";
 import { Kysely, KyselyConfig, SqliteDialect } from "kysely";
@@ -17,6 +17,28 @@ class ConfigFactory implements KyselyModuleOptionsFactory {
 class ConfigModule {}
 
 describe("KyselyModule.forRootAsync", () => {
+  test("should allow missing optional factory dependencies", async () => {
+    const config = new ConfigFactory().createKyselyModuleOptions();
+    const useFactory = vi.fn((options?: KyselyConfig) => options ?? config);
+    const module = await Test.createTestingModule({
+      imports: [
+        KyselyModule.forRootAsync({
+          inject: [{ token: "OPTIONAL_CONFIG", optional: true }],
+          useFactory,
+        }),
+      ],
+    }).compile();
+
+    try {
+      expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(
+        Kysely,
+      );
+      expect(useFactory).toHaveBeenCalledWith(undefined);
+    } finally {
+      await module.close();
+    }
+  });
+
   test("should create the client from the options factory given to useClass", async () => {
     const module = await Test.createTestingModule({
       imports: [KyselyModule.forRootAsync({ useClass: ConfigFactory })],

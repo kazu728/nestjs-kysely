@@ -68,7 +68,7 @@ describe("KyselyService - onApplicationShutdown", () => {
     const kyselyService = module.get(KyselyService);
     const client = kyselyService.activeClients[0]!;
     const destroySpy = vi.spyOn(client, "destroy");
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(
+    using consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(
       () => {},
     );
 
