@@ -1,87 +1,56 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { Logger } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { PostgresDialect } from "kysely";
-import { Pool } from "pg";
+import { Kysely, SqliteDialect } from "kysely";
+import Database from "better-sqlite3";
+import { KYSELY_MODULE_CONNECTION_TOKEN } from "./constants/kysely.constants";
 import { KyselyModule } from "./kysely.module";
-import { KyselyService } from "./kysely.service";
-
-enum EDatabases {
-  DB_1 = "kysely_test_1",
-  DB_2 = "kysely_test_2",
-}
-
-const getDatabaseProps = ({ database }: { database: string }) => ({
-  dialect: new PostgresDialect({
-    pool: new Pool({
-      host: "127.0.0.1",
-      user: "root",
-      password: "password",
-      database,
-    }),
-  }),
-});
 
 describe("KyselyService - onApplicationShutdown", () => {
   let module: TestingModule;
+  let first: Kysely<unknown>;
+  let second: Kysely<unknown>;
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
       imports: [
         KyselyModule.forRoot([
           {
-            namespace: EDatabases.DB_1,
-            ...getDatabaseProps({ database: EDatabases.DB_1 }),
+            namespace: "first",
+            dialect: new SqliteDialect({ database: new Database() }),
           },
           {
-            namespace: EDatabases.DB_2,
-            ...getDatabaseProps({ database: EDatabases.DB_2 }),
+            namespace: "second",
+            dialect: new SqliteDialect({ database: new Database() }),
           },
         ]),
       ],
     }).compile();
+    first = module.get(KYSELY_MODULE_CONNECTION_TOKEN("first"));
+    second = module.get(KYSELY_MODULE_CONNECTION_TOKEN("second"));
   });
 
-  test("should destroy all active Kysely clients on shutdown", async () => {
-    const kyselyService = module.get(KyselyService);
-    const spyOnApplicationShutdown = vi.spyOn(
-      kyselyService,
-      "onApplicationShutdown",
-    );
-    const destroySpies = kyselyService.activeClients.map((client) =>
+  test("should destroy every client on shutdown", async () => {
+    const destroySpies = [first, second].map((client) =>
       vi.spyOn(client, "destroy")
     );
 
-    expect(kyselyService.activeClients.length).toBe(2);
-
     await module.close();
 
-    expect(spyOnApplicationShutdown).toHaveBeenCalledTimes(1);
-    expect(kyselyService.activeClients.length).toBe(0);
     destroySpies.forEach((spy) => expect(spy).toHaveBeenCalledTimes(1));
   });
 
-  test("should return error if client destroy fails", async () => {
-    const CLIENT_DESTROY_FAIL_ERROR_MESSAGE = "Failed to destroy client";
-    const ON_APPLICATION_SHUTDOWN_ERROR_MESSAGE =
-      `Failed to destroy Kysely client`;
-
-    const kyselyService = module.get(KyselyService);
-    const client = kyselyService.activeClients[0]!;
-    const destroySpy = vi.spyOn(client, "destroy");
-    using consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(
-      () => {},
-    );
-
-    destroySpy.mockImplementation(() => {
-      throw new Error(CLIENT_DESTROY_FAIL_ERROR_MESSAGE);
-    });
+  test("should log a client that fails to be destroyed and still destroy the rest", async () => {
+    vi.spyOn(first, "destroy").mockRejectedValue(new Error("boom"));
+    const secondDestroy = vi.spyOn(second, "destroy");
+    using loggerError = vi.spyOn(Logger.prototype, "error")
+      .mockImplementation(() => {});
 
     await module.close();
 
-    expect(destroySpy).toHaveBeenCalledTimes(1);
-    expect(kyselyService.activeClients.length).toBe(1);
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      expect.stringContaining(ON_APPLICATION_SHUTDOWN_ERROR_MESSAGE),
+    expect(secondDestroy).toHaveBeenCalledTimes(1);
+    expect(loggerError).toHaveBeenCalledWith(
+      "Failed to destroy Kysely client: Error: boom",
     );
   });
 });

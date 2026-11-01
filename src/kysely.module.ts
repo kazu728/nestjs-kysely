@@ -4,10 +4,7 @@ import {
   KYSELY_MODULE_CONNECTION_TOKEN,
   KYSELY_MODULE_OPTIONS_TOKEN,
 } from "./constants/kysely.constants";
-import {
-  createKyselyClient,
-  createKyselyProvider,
-} from "./factories/kysely-client.factory";
+import { createKyselyProvider } from "./factories/kysely-client.factory";
 import {
   KyselyConfigWithNamespace,
   KyselyModuleAsyncOptions,
@@ -35,7 +32,7 @@ export class KyselyModule {
       inject: [KYSELY_MODULE_OPTIONS_TOKEN, KyselyService],
       provide: KYSELY_MODULE_CONNECTION_TOKEN(options?.namespace),
       useFactory: (config: KyselyConfig, service: KyselyService) =>
-        createKyselyClient({ config, service }),
+        service.createClient(config),
     };
 
     return {
