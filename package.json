@@ -37,7 +37,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:package": "node test/package/require.cjs && node test/package/import.mjs",
+    "test:package": "sh test/package/run.sh",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {

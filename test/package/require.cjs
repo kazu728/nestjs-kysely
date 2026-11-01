@@ -1,7 +1,10 @@
 const assert = require("node:assert/strict");
 require("reflect-metadata");
 
-assert.match(require.resolve("nestjs-kysely"), /dist[\\/]index\.cjs$/);
+assert.match(
+  require.resolve("nestjs-kysely"),
+  /node_modules[\\/]nestjs-kysely[\\/]dist[\\/]index\.cjs$/,
+);
 
 import("./scenario.mjs").then(({ verify }) =>
   verify({
