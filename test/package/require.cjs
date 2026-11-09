@@ -6,7 +6,8 @@ assert.match(
   /node_modules[\\/]nestjs-kysely[\\/]dist[\\/]index\.cjs$/,
 );
 
-import("./scenario.mjs").then(({ verify }) =>
+// A rejection is left unhandled on purpose: Node then exits with code 1, which fails run.sh.
+void import("./scenario.mjs").then(({ verify }) =>
   verify({
     common: require("@nestjs/common"),
     core: require("@nestjs/core"),

@@ -17,7 +17,7 @@ export class KyselyService implements OnApplicationShutdown {
       try {
         await client.destroy();
       } catch (e) {
-        this.logger.error(`Failed to destroy Kysely client: ${e}`);
+        this.logger.error(`Failed to destroy Kysely client: ${String(e)}`);
       }
     }
   }
