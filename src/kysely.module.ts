@@ -56,23 +56,18 @@ const createClientProvider = (
 });
 
 const createOptionsProviders = (
-  options: KyselyModuleAsyncOptions,
+  { useFactory, inject, useExisting, useClass }: KyselyModuleAsyncOptions,
 ): Provider[] => {
-  if ("useFactory" in options) {
-    const { inject, useFactory } = options;
+  if (useFactory) {
     return [{ inject, provide: KYSELY_MODULE_OPTIONS_TOKEN, useFactory }];
   }
-  if ("useExisting" in options) {
-    return [createOptionsFactoryProvider(options.useExisting)];
-  }
-  if ("useClass" in options) {
-    const { useClass } = options;
+  if (useExisting) return [createOptionsFactoryProvider(useExisting)];
+  if (useClass) {
     return [
       createOptionsFactoryProvider(useClass),
       { provide: useClass, useClass },
     ];
   }
-  // The type already requires one of them, but JavaScript callers bypass it.
   throw new Error(
     "KyselyModule.forRootAsync requires useFactory, useExisting or useClass",
   );
