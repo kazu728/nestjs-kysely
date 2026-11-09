@@ -7,6 +7,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
+    "declaration": true,
+    "isolatedDeclarations": true,
     "skipLibCheck": true
   },
   "include": ["./src"]
