@@ -68,7 +68,9 @@ const createOptionsProviders = (
       { provide: useClass, useClass },
     ];
   }
-  throw new Error("Invalid options");
+  throw new Error(
+    "KyselyModule.forRootAsync requires useFactory, useExisting or useClass",
+  );
 };
 
 const createOptionsFactoryProvider = (

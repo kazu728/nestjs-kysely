@@ -56,6 +56,8 @@ describe("KyselyModule.forRootAsync", () => {
   });
 
   test("should throw without useFactory, useClass or useExisting", () => {
-    expect(() => KyselyModule.forRootAsync({})).toThrow("Invalid options");
+    expect(() => KyselyModule.forRootAsync({})).toThrow(
+      "KyselyModule.forRootAsync requires useFactory, useExisting or useClass",
+    );
   });
 });
