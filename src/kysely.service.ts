@@ -1,24 +1,23 @@
-import { OnApplicationShutdown } from "@nestjs/common";
-import { Kysely } from "kysely";
+import { Logger, OnApplicationShutdown } from "@nestjs/common";
+import { Kysely, KyselyConfig } from "kysely";
 
 export class KyselyService implements OnApplicationShutdown {
-  private storedActiveClients: Set<Kysely<any>> = new Set();
+  private readonly logger = new Logger("KyselyModule");
+  private readonly clients = new Set<Kysely<any>>();
 
-  get activeClients() {
-    return Array.from(this.storedActiveClients);
+  createClient(config: KyselyConfig): Kysely<any> {
+    const client = new Kysely<any>(config);
+    this.clients.add(client);
+    return client;
   }
 
-  addClient(client: Kysely<any>) {
-    this.storedActiveClients.add(client);
-  }
-
+  // Nest 11 does not catch errors thrown here, so one failure would stop the remaining clients and modules from shutting down.
   async onApplicationShutdown() {
-    for (const client of this.storedActiveClients.values()) {
+    for (const client of this.clients) {
       try {
         await client.destroy();
-        this.storedActiveClients.delete(client);
       } catch (e) {
-        console.error(`Failed to destroy Kysely client: ${e}`);
+        this.logger.error(`Failed to destroy Kysely client: ${e}`);
       }
     }
   }

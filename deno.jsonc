@@ -11,8 +11,6 @@
       ],
       "exclude": [
         "no-explicit-any",
-        "require-await",
-        "ban-ts-comment",
         "no-sloppy-imports"
       ]
     }
