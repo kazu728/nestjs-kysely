@@ -1,4 +1,13 @@
-import { Database } from "../interfaces/sample";
-import { Kysely } from "kysely";
+interface Person {
+  id: number;
+}
 
-export type DB = Kysely<Database>;
+interface Pet {
+  id: number;
+  owner_id: number;
+}
+
+export interface DB {
+  person: Person;
+  pet: Pet;
+}

@@ -1,10 +1,11 @@
 import { Controller, Get } from "@nestjs/common";
 import { InjectKysely } from "nestjs-kysely";
+import { Kysely } from "kysely";
 import { DB } from "./@types";
 
 @Controller()
 export class AppController {
-  constructor(@InjectKysely() private readonly db: DB) {}
+  constructor(@InjectKysely() private readonly db: Kysely<DB>) {}
 
   @Get()
   async getHello(): Promise<string> {
