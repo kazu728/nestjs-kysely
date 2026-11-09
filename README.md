@@ -141,28 +141,24 @@ import { AppController } from "./app.controller";
   imports: [
     KyselyModule.forRootAsync({
       namespace: "mysql",
-      useFactory: () => (
-        {
-          dialect: new MysqlDialect({
-            pool: createPool({
-              host: "127.0.0.1",
-              user: "root",
-              password: "password",
-              database: "kysely_test",
-            }),
+      useFactory: () => ({
+        dialect: new MysqlDialect({
+          pool: createPool({
+            host: "127.0.0.1",
+            user: "root",
+            password: "password",
+            database: "kysely_test",
           }),
-        }
-      ),
+        }),
+      }),
     }),
     KyselyModule.forRootAsync({
       namespace: "sqlite",
-      useFactory: () => (
-        {
-          dialect: new SqliteDialect({
-            database: new Database(),
-          }),
-        }
-      ),
+      useFactory: () => ({
+        dialect: new SqliteDialect({
+          database: new Database(),
+        }),
+      }),
     }),
   ],
   controllers: [AppController],

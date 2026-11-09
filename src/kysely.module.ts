@@ -1,9 +1,6 @@
 import { DynamicModule, Module, Provider, Type } from "@nestjs/common";
 import { KyselyConfig } from "kysely";
-import {
-  KYSELY_MODULE_CONNECTION_TOKEN,
-  KYSELY_MODULE_OPTIONS_TOKEN,
-} from "./kysely.constants";
+import { KYSELY_MODULE_CONNECTION_TOKEN, KYSELY_MODULE_OPTIONS_TOKEN } from "./kysely.constants";
 import {
   KyselyConfigWithNamespace,
   KyselyModuleAsyncOptions,
@@ -13,9 +10,7 @@ import { KyselyService } from "./kysely.service";
 
 @Module({})
 export class KyselyModule {
-  public static forRoot(
-    config: KyselyConfig | KyselyConfigWithNamespace[],
-  ): DynamicModule {
+  public static forRoot(config: KyselyConfig | KyselyConfigWithNamespace[]): DynamicModule {
     const providers = Array.isArray(config)
       ? config.map((entry) => createClientProvider(entry.namespace, entry))
       : [createClientProvider(undefined, config)];
@@ -32,8 +27,7 @@ export class KyselyModule {
     const provider: Provider = {
       inject: [KYSELY_MODULE_OPTIONS_TOKEN, KyselyService],
       provide: KYSELY_MODULE_CONNECTION_TOKEN(options.namespace),
-      useFactory: (config: KyselyConfig, service: KyselyService) =>
-        service.createClient(config),
+      useFactory: (config: KyselyConfig, service: KyselyService) => service.createClient(config),
     };
 
     return {
@@ -46,31 +40,26 @@ export class KyselyModule {
   }
 }
 
-const createClientProvider = (
-  namespace: string | undefined,
-  config: KyselyConfig,
-): Provider => ({
+const createClientProvider = (namespace: string | undefined, config: KyselyConfig): Provider => ({
   inject: [KyselyService],
   provide: KYSELY_MODULE_CONNECTION_TOKEN(namespace),
   useFactory: (service: KyselyService) => service.createClient(config),
 });
 
-const createOptionsProviders = (
-  { useFactory, inject, useExisting, useClass }: KyselyModuleAsyncOptions,
-): Provider[] => {
+const createOptionsProviders = ({
+  useFactory,
+  inject,
+  useExisting,
+  useClass,
+}: KyselyModuleAsyncOptions): Provider[] => {
   if (useFactory) {
     return [{ inject, provide: KYSELY_MODULE_OPTIONS_TOKEN, useFactory }];
   }
   if (useExisting) return [createOptionsFactoryProvider(useExisting)];
   if (useClass) {
-    return [
-      createOptionsFactoryProvider(useClass),
-      { provide: useClass, useClass },
-    ];
+    return [createOptionsFactoryProvider(useClass), { provide: useClass, useClass }];
   }
-  throw new Error(
-    "KyselyModule.forRootAsync requires useFactory, useExisting or useClass",
-  );
+  throw new Error("KyselyModule.forRootAsync requires useFactory, useExisting or useClass");
 };
 
 const createOptionsFactoryProvider = (
@@ -78,6 +67,5 @@ const createOptionsFactoryProvider = (
 ): Provider => ({
   inject: [optionsFactory],
   provide: KYSELY_MODULE_OPTIONS_TOKEN,
-  useFactory: (factory: KyselyModuleOptionsFactory) =>
-    factory.createKyselyModuleOptions(),
+  useFactory: (factory: KyselyModuleOptionsFactory) => factory.createKyselyModuleOptions(),
 });

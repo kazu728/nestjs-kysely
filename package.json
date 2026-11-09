@@ -6,16 +6,19 @@
     "kysely",
     "nestjs"
   ],
-  "author": "kazu728",
+  "bugs": "https://github.com/kazu728/nestjs-kysely/issues",
   "license": "MIT",
+  "author": "kazu728",
   "repository": {
     "type": "git",
     "url": "https://github.com/kazu728/nestjs-kysely"
   },
-  "bugs": "https://github.com/kazu728/nestjs-kysely/issues",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "type": "module",
   "exports": {
     ".": {
       "types": {
@@ -26,25 +29,16 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "tsdown",
-    "format": "deno fmt -c deno.jsonc",
-    "format:check": "deno fmt --check -c deno.jsonc",
-    "lint": "deno lint -c deno.jsonc",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint --type-aware --deny-warnings",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:package": "sh test/package/run.sh",
     "prepublishOnly": "npm run build"
-  },
-  "peerDependencies": {
-    "@nestjs/common": "^11.0.0 || ^12.0.0",
-    "@nestjs/core": "^11.0.0 || ^12.0.0",
-    "kysely": "0.x",
-    "reflect-metadata": "^0.1.13 || ^0.2.2"
   },
   "devDependencies": {
     "@nestjs/common": "^12.3.2",
@@ -55,11 +49,20 @@
     "@vitest/ui": "^5.0.5",
     "better-sqlite3": "^13.0.3",
     "kysely": "^0.29.8",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
+    "oxlint-tsgolint": "^7.0.2006",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "tsdown": "^0.23.7",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0 || ^12.0.0",
+    "@nestjs/core": "^11.0.0 || ^12.0.0",
+    "kysely": "0.x",
+    "reflect-metadata": "^0.1.13 || ^0.2.2"
   },
   "engines": {
     "node": ">=24"

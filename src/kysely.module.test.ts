@@ -4,10 +4,7 @@ import { Module } from "@nestjs/common";
 import { Kysely, KyselyConfig, SqliteDialect } from "kysely";
 import Database from "better-sqlite3";
 import { KYSELY_MODULE_CONNECTION_TOKEN } from "./kysely.constants";
-import {
-  KyselyModuleAsyncOptions,
-  KyselyModuleOptionsFactory,
-} from "./kysely.interfaces";
+import { KyselyModuleAsyncOptions, KyselyModuleOptionsFactory } from "./kysely.interfaces";
 import { KyselyModule } from "./kysely.module";
 
 class ConfigFactory implements KyselyModuleOptionsFactory {
