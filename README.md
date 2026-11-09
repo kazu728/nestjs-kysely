@@ -86,11 +86,11 @@ export class AppController {
 }
 ```
 
-# Multiple namespace
+## Multiple namespace
 
 Register KyselyModule with multiple DBs for your app.
 
-## Example forRoot
+### Example forRoot
 
 ```ts
 import { Module } from "@nestjs/common";
@@ -127,7 +127,7 @@ import { AppController } from "./app.controller";
 export class AppModule {}
 ```
 
-## Example forRootAsync
+### Example forRootAsync
 
 ```ts
 import { Module } from "@nestjs/common";
@@ -170,7 +170,7 @@ import { AppController } from "./app.controller";
 export class AppModule {}
 ```
 
-## Use it
+### Use it
 
 You can then inject the Kysely client into any of your injectables by using a
 custom decorator with namespace as input.
@@ -201,6 +201,6 @@ export class AppController {
 }
 ```
 
-# License
+## License
 
 MIT
