@@ -1,10 +1,13 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, onTestFinished, test, vi } from "vitest";
 import { Test } from "@nestjs/testing";
 import { Module } from "@nestjs/common";
 import { Kysely, KyselyConfig, SqliteDialect } from "kysely";
 import Database from "better-sqlite3";
 import { KYSELY_MODULE_CONNECTION_TOKEN } from "./kysely.constants";
-import { KyselyModuleOptionsFactory } from "./kysely.interfaces";
+import {
+  KyselyModuleAsyncOptions,
+  KyselyModuleOptionsFactory,
+} from "./kysely.interfaces";
 import { KyselyModule } from "./kysely.module";
 
 class ConfigFactory implements KyselyModuleOptionsFactory {
@@ -16,46 +19,38 @@ class ConfigFactory implements KyselyModuleOptionsFactory {
 @Module({ providers: [ConfigFactory], exports: [ConfigFactory] })
 class ConfigModule {}
 
+const compile = async (options: KyselyModuleAsyncOptions) => {
+  const module = await Test.createTestingModule({
+    imports: [KyselyModule.forRootAsync(options)],
+  }).compile();
+  onTestFinished(() => module.close());
+  return module;
+};
+
 describe("KyselyModule.forRootAsync", () => {
   test("should allow missing optional factory dependencies", async () => {
     const config = new ConfigFactory().createKyselyModuleOptions();
     const useFactory = vi.fn((options?: KyselyConfig) => options ?? config);
-    const module = await Test.createTestingModule({
-      imports: [
-        KyselyModule.forRootAsync({
-          inject: [{ token: "OPTIONAL_CONFIG", optional: true }],
-          useFactory,
-        }),
-      ],
-    }).compile();
+    const module = await compile({
+      inject: [{ token: "OPTIONAL_CONFIG", optional: true }],
+      useFactory,
+    });
 
-    try {
-      expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(
-        Kysely,
-      );
-      expect(useFactory).toHaveBeenCalledWith(undefined);
-    } finally {
-      await module.close();
-    }
+    expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(Kysely);
+    expect(useFactory).toHaveBeenCalledWith(undefined);
   });
 
   test("should create the client from the options factory given to useClass", async () => {
-    const module = await Test.createTestingModule({
-      imports: [KyselyModule.forRootAsync({ useClass: ConfigFactory })],
-    }).compile();
+    const module = await compile({ useClass: ConfigFactory });
 
     expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(Kysely);
   });
 
   test("should create the client from the options factory given to useExisting", async () => {
-    const module = await Test.createTestingModule({
-      imports: [
-        KyselyModule.forRootAsync({
-          imports: [ConfigModule],
-          useExisting: ConfigFactory,
-        }),
-      ],
-    }).compile();
+    const module = await compile({
+      imports: [ConfigModule],
+      useExisting: ConfigFactory,
+    });
 
     expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(Kysely);
   });
