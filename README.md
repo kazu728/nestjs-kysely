@@ -20,8 +20,8 @@ npm i nestjs-kysely kysely
 | 4.x           | 11, 12 | 0.x    |
 | 3.x           | 8–12   | 0.x    |
 
-4.x supports the NestJS majors that still receive patch releases. On NestJS
-8–10, install 3.x:
+4.x requires Node.js 24 or later and supports the NestJS majors that still
+receive patch releases. On NestJS 8–10, install 3.x:
 
 ```
 npm i nestjs-kysely@3 kysely
