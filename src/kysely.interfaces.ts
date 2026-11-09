@@ -5,14 +5,17 @@ export interface KyselyModuleOptionsFactory {
   createKyselyModuleOptions(): Promise<KyselyConfig> | KyselyConfig;
 }
 
-export interface KyselyModuleAsyncOptions
-  extends Pick<ModuleMetadata, "imports"> {
-  namespace?: string;
-  inject?: FactoryProvider["inject"];
-  useClass?: Type<KyselyModuleOptionsFactory>;
-  useExisting?: Type<KyselyModuleOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<KyselyConfig> | KyselyConfig;
-}
+export type KyselyModuleAsyncOptions =
+  & Pick<ModuleMetadata, "imports">
+  & { namespace?: string }
+  & (
+    | {
+      useFactory: (...args: any[]) => Promise<KyselyConfig> | KyselyConfig;
+      inject?: FactoryProvider["inject"];
+    }
+    | { useExisting: Type<KyselyModuleOptionsFactory> }
+    | { useClass: Type<KyselyModuleOptionsFactory> }
+  );
 
 export interface KyselyConfigWithNamespace extends KyselyConfig {
   namespace: string;

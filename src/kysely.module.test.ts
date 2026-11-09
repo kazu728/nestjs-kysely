@@ -60,7 +60,10 @@ describe("KyselyModule.forRootAsync", () => {
     expect(module.get(KYSELY_MODULE_CONNECTION_TOKEN())).toBeInstanceOf(Kysely);
   });
 
-  test("should throw without useFactory, useClass or useExisting", () => {
-    expect(() => KyselyModule.forRootAsync({})).toThrow("Invalid options");
+  test("should throw without useFactory, useExisting or useClass", () => {
+    // @ts-expect-error: the type rejects these options, but JavaScript callers can still pass them.
+    expect(() => KyselyModule.forRootAsync({})).toThrow(
+      "KyselyModule.forRootAsync requires useFactory, useExisting or useClass",
+    );
   });
 });
