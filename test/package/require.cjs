@@ -14,5 +14,5 @@ void import("./scenario.mjs").then(({ verify }) =>
     kysely: require("kysely"),
     Database: require("better-sqlite3"),
     nestjsKysely: require("nestjs-kysely"),
-  })
+  }),
 );

@@ -31,9 +31,7 @@ describe("KyselyService - onApplicationShutdown", () => {
   });
 
   test("should destroy every client on shutdown", async () => {
-    const destroySpies = [first, second].map((client) =>
-      vi.spyOn(client, "destroy")
-    );
+    const destroySpies = [first, second].map((client) => vi.spyOn(client, "destroy"));
 
     await module.close();
 
@@ -43,14 +41,11 @@ describe("KyselyService - onApplicationShutdown", () => {
   test("should log a client that fails to be destroyed and still destroy the rest", async () => {
     vi.spyOn(first, "destroy").mockRejectedValue(new Error("boom"));
     const secondDestroy = vi.spyOn(second, "destroy");
-    using loggerError = vi.spyOn(Logger.prototype, "error")
-      .mockImplementation(() => {});
+    using loggerError = vi.spyOn(Logger.prototype, "error").mockImplementation(() => {});
 
     await module.close();
 
     expect(secondDestroy).toHaveBeenCalledTimes(1);
-    expect(loggerError).toHaveBeenCalledWith(
-      "Failed to destroy Kysely client: Error: boom",
-    );
+    expect(loggerError).toHaveBeenCalledWith("Failed to destroy Kysely client: Error: boom");
   });
 });
