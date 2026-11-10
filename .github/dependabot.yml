@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /example
+    schedule:
+      interval: weekly
+    ignore:
+      # The example is typed against the oldest Node.js major in engines, not the latest.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
