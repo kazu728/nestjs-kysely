@@ -15,10 +15,10 @@ npm i nestjs-kysely kysely
 
 ## Supported versions
 
-| nestjs-kysely | NestJS | Kysely            |
-| ------------- | ------ | ----------------- |
-| 4.x           | 11, 12 | 0.28 or later 0.x |
-| 3.x           | 8–12   | 0.x               |
+| nestjs-kysely | NestJS | Kysely    |
+| ------------- | ------ | --------- |
+| 4.x           | 11, 12 | >=0.28 <1 |
+| 3.x           | 8–12   | 0.x       |
 
 4.x requires Node.js 24 or later and supports the NestJS majors and Kysely
 minors that still receive patch releases. On NestJS 8–10 or Kysely 0.27 and
