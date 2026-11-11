@@ -40,3 +40,8 @@ jobs:
         run: npm run build
       - name: Test package
         run: npm run test:package
+      - name: Build example
+        working-directory: example
+        run: |
+          npm ci --ignore-scripts
+          npm run build
