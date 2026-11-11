@@ -2,7 +2,6 @@
 
 [![npm version](https://badge.fury.io/js/nestjs-kysely.svg)](https://www.npmjs.com/package/nestjs-kysely)
 [![check](https://github.com/kazu728/nestjs-kysely/actions/workflows/check.yml/badge.svg)](https://github.com/kazu728/nestjs-kysely/actions/workflows/check.yml)
-[![codecov](https://codecov.io/gh/kazu728/nestjs-kysely/branch/master/graph/badge.svg?token=5PN87HH33L)](https://codecov.io/gh/kazu728/nestjs-kysely)
 
 `nestjs-kysely` implements a module that provides the client of Kysely, which is
 a type-safe query builder.
