@@ -10,7 +10,14 @@ updates:
       # The example is typed against the oldest Node.js major in engines, not the latest.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+    # Auto-merged commits do not trigger CI on master, so the updates are tested together in one pull request.
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
