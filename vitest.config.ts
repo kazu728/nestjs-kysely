@@ -6,7 +6,6 @@ export default defineConfig({
     coverage: {
       enabled: true,
       include: ["src/**/*.ts"],
-      exclude: ["src/index.ts", "src/kysely.interfaces.ts"],
     },
   },
 });
