@@ -14,7 +14,7 @@
   "dependencies": {
     "@nestjs/common": "^12.3.2",
     "@nestjs/core": "^12.3.2",
-    "@nestjs/platform-express": "^12.3.2",
+    "@nestjs/platform-express": "^12.4.0",
     "kysely": "^0.29.8",
     "mysql2": "^3.24.6",
     "nestjs-kysely": "file:..",
