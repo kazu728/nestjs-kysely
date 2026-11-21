@@ -12,9 +12,11 @@ jobs:
     steps:
       - id: metadata
         uses: dependabot/fetch-metadata@v3.1.0
+      # github-actions updates rewrite actions.lock, which should get a human review before it lands.
       - if: >-
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+          steps.metadata.outputs.package-ecosystem == 'npm_and_yarn' &&
+          (steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor')
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           GH_TOKEN: ${{ github.token }}
